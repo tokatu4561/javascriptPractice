@@ -19,16 +19,17 @@ function reactive(target) {
 let activeEffect = null;
 function effect(fn) {
   activeEffect = fn;
+  activeEffect();
 }
 
 const targetMap = new WeakMap();
 function track(target) {
   console.log('%c[effect:register]', 'background: blue; color: white;', target, activeEffect);
-  targetMap.set(taeget,activeEffect);
+  targetMap.set(target,activeEffect);
 }
 
 function trigger(target) {
   const effect = targetMap.get(target);
-  activeEffect();
+  effect();
 }
 export { effect, trigger, reactive };
