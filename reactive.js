@@ -2,7 +2,7 @@ const handler = {
   get(target, key, receiver) {
     const res = Reflect.get(target, key, receiver);
     console.log('%c[reactive:get]', 'background: green; color: white;', key, res);
-    track(target);
+    track(target, key);
     return res;
   },
   set(target, key, value, receiver) {
@@ -23,9 +23,18 @@ function effect(fn) {
 }
 
 const targetMap = new WeakMap();
-function track(target) {
+function track(target, key) {
   console.log('%c[effect:register]', 'background: blue; color: white;', target, activeEffect);
-  targetMap.set(target,activeEffect);
+  let depsMap = targetMap.get(target);
+
+  if(!depsMap){
+    depsMap = new Map();
+    targetMap.set(target, depsMap);
+  }
+
+  targetMap.set(target,depsMap);
+
+  depsMap.set(key, activeEffect);
 }
 
 function trigger(target) {
