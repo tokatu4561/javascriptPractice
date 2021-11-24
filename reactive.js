@@ -1,13 +1,13 @@
 const handler = {
   get(target, key, receiver) {
     const res = Reflect.get(target, key, receiver);
-    console.log('%c[reactive:get]', 'background: green; color: white;',target, key, res);
+    console.log('%c[reactive:get]', 'background: green; color: white;', target, key, res);
     track(target, key);
     return res;
   },
   set(target, key, value, receiver) {
     const res = Reflect.set(target, key, value, receiver);
-    console.log('%c[reactive:set]', 'background: red; color: white;',target,  key, value);
+    console.log('%c[reactive:set]', 'background: red; color: white;', target, key, value);
     trigger(target, key);
     return res;
   }
@@ -18,40 +18,60 @@ function reactive(target) {
 
 let activeEffect = null;
 function effect(fn) {
-  activeEffect = fn;
-  activeEffect();
+  try {
+    activeEffect = fn;
+    activeEffect();
+    return activeEffect;
+  } finally {
+    activeEffect = null;
+  }
 }
 
 const targetMap = new WeakMap();
 function track(target, key) {
+  if (activeEffect === null) {
+    return;
+  }
   let depsMap = targetMap.get(target);
 
-  if(!depsMap){
-    depsMap = new Map();
-    targetMap.set(target, depsMap);
+  if (!depsMap) {
+    targetMap.set(target, (depsMap = new Map()));
   }
 
-  let deps  = depsMap.get(key);
-  if(!deps){
-    depsMap.set(key, deps  = new Set());
+  let deps = depsMap.get(key);
+  if (!deps) {
+    depsMap.set(key, (deps = new Set()));
   }
-  if(!deps.has(activeEffect)){
+
+  if (!deps.has(activeEffect)) {
     console.log('%c[effect:register]', 'background: blue; color: white;', target, key, activeEffect);
-    deps .add(key, activeEffect);
+    deps.add(activeEffect);
   }
-
 }
 
 function trigger(target, key) {
   const depsMap = targetMap.get(target);
-
-  if(!depsMap) {
+  if (!depsMap) {
     return;
   }
   const deps = depsMap.get(key);
-  if(!deps){
+  if (!deps) {
     return;
   }
   deps.forEach(effect => effect());
 }
-export { effect, trigger, reactive };
+
+function computed(getter) {
+  let computed;
+  const runner = effect(getter);
+
+  computed = {
+    get value() {
+      const value = runner();
+      console.log('%c[computed:refresh]', 'background: purple; color: white;', value);
+      return value;
+    }
+  }
+  return computed;
+}
+export { effect, trigger, reactive, computed };
