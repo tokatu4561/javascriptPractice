@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="app.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <section class="carousel">
+            <div class="carousel__main">
+               <transition name="active">
+                   <div class="carousel__main"
+                        :key="images[active].id"
+                        v-show="active == images[active].id">
+                       <img :src="images[active].img" alt="" srcset="">
+                   </div>
+               </transition>
+            </div>
+            <div @click="prev" class="carousel__prev">
+                <i class="fa-solid fa-angle-left fa-5px"></i>
+            </div>
+            <div @click="next" class="carousel__next">
+                <i class="fa-solid fa-angle-right fa-5px"></i>
+            </div>
+            <ul class="carousel__thumbnails">
+                <li v-for="(image, id) in images" :key="image.id" 
+                :class="{ current: active === image.id}"
+                @click="current(image.id)">
+                    <img :src="image.img" alt="" srcset="">
+                </li>
+            </ul>
+        </section>
+        <transition name="fade">
+        </transition>
+    </div>
+    <script>
+        let app = new Vue({
+            el:'#app',
+            data(){
+                return {
+                    active:0,
+                    images: [
+                        { id:0, img:'images/image00.jpg'},
+                        { id:1, img:'images/image01.jpg'},
+                        { id:2, img:'images/image02.jpg'},
+                        { id:3, img:'images/image03.jpg'},
+                        { id:4, img:'images/image04.jpg'},
+                        { id:5, img:'images/image05.jpg'},
+                    ]
+                }
+            },
+            methods:{
+                current(id){
+                    this.active = id
+                },
+                prev(){
+                    if(this.active <= 0){
+                    this.active = this.images.length - 1
+                    } else {
+                    this.active--
+                    }
+                },
+                next(){
+                    if(this.active >= this.images.length - 1){
+                    this.active = 0
+                    } else {
+                    this.active++
+                    }
+                }
+            },
+            mounted(){
+                setInterval(() => {
+                    let that = this
+                    that.next()
+                }, 4000)
+            }
+        })
+    </script>
+</body>
+</html>
