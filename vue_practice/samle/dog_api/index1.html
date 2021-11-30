@@ -13,7 +13,18 @@
         ヘッダー
       </v-app-bar>
       <v-main>
-        <v-container fluid>Hello world</v-container>
+        <v-container fluid>
+          <v-row>
+            <v-col
+            v-for="(dogType, index) in dogTypes"
+            :key="index"
+            cols="6">
+            <v-btn color="cyan">
+              {{ dogType }}
+            </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-main>
 
       <v-footer>
@@ -24,11 +35,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.3.10/dist/vuetify.js"></script>
-  <script>
-    new Vue({
-      el: '#app',
-      vuetify: new Vuetify(),
-    })
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <script src="./Vue.js"></script>
 </body>
 </html>
