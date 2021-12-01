@@ -19,9 +19,23 @@
             v-for="(dogType, index) in dogTypes"
             :key="index"
             cols="6">
-            <v-btn color="cyan">
+            <v-btn 
+            @click.prevent="fetchDogImages(index)"
+            color="cyan">
               {{ dogType }}
             </v-btn>
+            </v-col>
+          </v-row>
+          <v-row v-show="isShow">
+            <v-col
+            v-for="dogImage in dogImages"
+            :key="dogImage"
+            cols="12" sm="6" md="4">
+            <v-card>
+              <v-img :src="dogImage">
+                
+              </v-img>
+            </v-card>
             </v-col>
           </v-row>
         </v-container>
