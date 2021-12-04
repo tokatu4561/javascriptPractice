@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import BookList from '../views/BookList.vue'
-import BooDetail from '../views/BookList.vue'
+import BookDetail from '../components/BookDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -26,9 +26,15 @@ const routes = [
     component: BookList
   },
   {
-    path: '/book:id',
+    path: '/book/:id',
     name: 'Book',
-    component: BooDetail
+    component: BookDetail,
+    props: (route) => (
+      { 
+        id: Number(route.params.id),
+        title: route.params.title,
+        content: route.params.content
+      })
   },
 ]
 
