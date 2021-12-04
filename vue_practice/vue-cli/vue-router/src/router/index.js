@@ -5,7 +5,9 @@ import BookList from '../views/BookList.vue'
 import BookDetail from '../components/BookDetail.vue'
 import Item from '../views/Item.vue'
 import NotFound from '../components/NotFound.vue'
-
+import User from '@/views/User.vue'
+import UserProfile from '../components/UserProfile.vue'
+import UserPost from '../components/UserPost.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -44,11 +46,30 @@ const routes = [
     component: Item
   },
   {
+    path:'/user',
+    // name: User,
+    component: User,
+    children: [
+      {
+        // /user/:id/profile がマッチした時に
+        // UserProfile は User の <router-view> 内部で描画されます
+        path: 'profile',
+        component: UserProfile
+      },
+      {
+        // /user/:id/posts がマッチした時に
+        // UserPosts は User の <router-view> 内部で描画されます
+        path: 'posts',
+        component: UserPost
+      }
+    ]
+  },
+  {
     path:'*',
     // redirect: '/'
     name:'NotFound',
     component: NotFound
-  }
+  },
 ]
 
 const router = new VueRouter({
