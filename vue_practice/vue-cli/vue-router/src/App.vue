@@ -8,12 +8,41 @@
       <router-link to="/User/Profile">User</router-link>
     </div>
     <div class="blue-b">
-    <router-view/>
+      <transition name="fade" mode="out-in">
+        <router-view/>
+      </transition>
+    </div>
+    <div>
+    <router-view name="sub"/>
     </div>
   </div>
 </template>
 
-<style>
+<style lang="scss">
+.fade{
+  &-enter{
+    transform: translate(-100px,0);
+    opacity: 0;
+    &-to{
+      opacity: 1;
+    }
+    &-active{
+      transition: all 1s 0s ease;
+    }
+  }
+  &-leave{
+    transform: translate(0,0);
+    opacity: 1;
+    &-to{
+      transform: translate(100px,0);
+      opacity: 0;
+    }
+    &-active{
+      transition: all 1s 0s ease;
+    }
+  }
+}
+
 .blue-b {
   border: 1px blue solid;
 }

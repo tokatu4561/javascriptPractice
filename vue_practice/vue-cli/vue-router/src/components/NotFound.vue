@@ -1,6 +1,6 @@
 <template>
   <div>
-      404　ページが存在しません<br>
+      404ページが存在しません<br>
       <button @click="goToHome">ホームに戻る</button>
   </div>
 </template>

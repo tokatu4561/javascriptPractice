@@ -14,7 +14,8 @@ export default {
     },
     watch:{
         $route: function (to, from) {
-            
+            console.log(to)
+            console.log(from)
         }
     }
 }
