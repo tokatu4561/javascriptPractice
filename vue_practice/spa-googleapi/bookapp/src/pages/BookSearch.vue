@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-container>
       <v-row>
         <v-col cols="6">
              <v-text-field
@@ -51,7 +50,6 @@
           </v-card>
         </v-col>
       </v-row>
-    </v-container>
   </div>
 </template>
 
@@ -65,6 +63,9 @@ export default {
         }
       },
       methods:{
+        addBookList(index) {
+          this.$emit('add-book-list', this.searchResults[index])
+        },
         async search(keyword){
           this.searchResults = []
         // クエリーストリングを作成
@@ -77,20 +78,20 @@ export default {
           console.log(baseUrl + queryParams)
 
         // fetchでJSON取得
-        const response = await fetch(baseUrl + queryParams)
-        .then( response => response.json())
-        console.log(response.items)
-        // 必要な情報を配列にpush
-        for(let book of response.items ){
-          let title = book.volumeInfo.title
-          let img = book.volumeInfo.imageLinks
-          let description = book.volumeInfo.description
-          this.searchResults.push({
-            title: title ? title : '',
-            image: img ? img.thumbnail : '',
-            description: description ? description.slice(0, 40) : ''
-          })
-        } 
+          const response = await fetch(baseUrl + queryParams)
+          .then( response => response.json())
+          console.log(response.items)
+          // 必要な情報を配列にpush
+          for(let book of response.items ){
+            let title = book.volumeInfo.title
+            let img = book.volumeInfo.imageLinks
+            let description = book.volumeInfo.description
+            this.searchResults.push({
+              title: title ? title : '',
+              image: img ? img.thumbnail : '',
+              description: description ? description.slice(0, 40) : ''
+            })
+          } 
        }
       }
 }
