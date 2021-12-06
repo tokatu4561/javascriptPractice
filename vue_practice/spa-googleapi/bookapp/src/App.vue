@@ -4,6 +4,7 @@
     <v-main>
       <v-container>
       <router-view
+      :books="books"
       @add-book-list="addBook"/>
       </v-container>
     </v-main>
@@ -50,6 +51,9 @@ export default {
       });
       this.newBook = '';
       this.saveBooks();
+      // 最後に追加したIDを取得する
+      let lastId = this.books.slice(-1)[0].id
+      this.goToEditPage(lastId);
     },
     removeBook(x) {
       this.books.splice(x, 1);
@@ -58,6 +62,9 @@ export default {
     saveBooks() {
       const parsed = JSON.stringify(this.books);
       localStorage.setItem(STORAGE_KEY, parsed);
+    },
+    goToEditPage(id){
+      this.$router.push(`edit/${id}`)
     }
   }
 };

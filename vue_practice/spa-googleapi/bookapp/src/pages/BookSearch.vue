@@ -32,7 +32,7 @@
                 <v-card-title>
                   {{ book.description }}
                   <v-spacer></v-spacer>
-                  <v-card-action>
+                  <v-card-actions>
                     <v-btn
                       fab
                       dark
@@ -43,7 +43,7 @@
                         mdi-plus
                       </v-icon>
                     </v-btn>
-                  </v-card-action>
+                  </v-card-actions>
                 </v-card-title>
               </v-col>
             </v-row>
@@ -81,7 +81,7 @@ export default {
           const response = await fetch(baseUrl + queryParams)
           .then( response => response.json())
           console.log(response.items)
-          // 必要な情報を配列にpush
+         // 必要な情報を配列にpush
           for(let book of response.items ){
             let title = book.volumeInfo.title
             let img = book.volumeInfo.imageLinks
@@ -91,7 +91,7 @@ export default {
               image: img ? img.thumbnail : '',
               description: description ? description.slice(0, 40) : ''
             })
-          } 
+          }
        }
       }
 }
