@@ -36,10 +36,10 @@
               感想：<v-textarea class="mx-2" v-model="book.memo">
                 {{ book.memo }}
               </v-textarea>
-              <v-card-acttions>
+              <v-card-actions>
                 <v-btn color="secondary" to="/">一覧に戻る</v-btn>
-                <v-btn color="info" @click="editBookInfo">保存</v-btn>
-              </v-card-acttions>
+                <v-btn color="info" @click="updateBookInfo">保存</v-btn>
+              </v-card-actions>
             </v-col>
           </v-row>
         </v-card>
@@ -59,6 +59,15 @@ export default {
       book: '',
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       menu: false,
+    }
+  },
+  methods:{
+    updateBookInfo(){
+      this.$emit('update-book-info', {
+        id: this.$route.params.id,
+        readDate: this.Date,
+        memo: this.book.memo
+      })
     }
   },
   beforeRouteEnter (to, from, next) {
