@@ -27,13 +27,8 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+      <v-btn color="error" @click="deleteLocalStorage">
+        削除する
       </v-btn>
     </v-app-bar>
   </div>
@@ -41,6 +36,12 @@
 
 <script>
 export default {
+  name: 'Header',
+  methods:{
+    deleteLocalStorage(){
+      this.$emit('delete-local-storage')
+    }
+  }
 
 }
 </script>
