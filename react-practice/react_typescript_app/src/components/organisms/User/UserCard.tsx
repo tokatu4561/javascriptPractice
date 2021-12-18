@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const UserCard: VFC<Props> = memo((props) => {
- const {imageUrl,userName,fullName, onClick,id} = props;
+ const {id, imageUrl,userName,fullName, onClick} = props;
   return (
     <Box
       p={4}
