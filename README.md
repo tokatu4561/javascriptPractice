@@ -1,2 +1,2 @@
 # javascriptPractice
-このリポジトリはjavascript学習用です
+このリポジトリはjavascript個人学習用です
