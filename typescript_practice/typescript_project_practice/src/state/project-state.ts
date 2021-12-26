@@ -1,4 +1,4 @@
-import { Project, ProjectStatus } from "../models/project-model.js";
+import { Project, ProjectStatus } from "../models/project-model";
 //   プロジェクトの状態管理
     type Listener<T> = (items: T[]) => void;
     
