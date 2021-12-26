@@ -1,5 +1,5 @@
+import { Project, ProjectStatus } from "../models/project-model.js";
 //   プロジェクトの状態管理
-namespace App{
     type Listener<T> = (items: T[]) => void;
     
     class State<T> {
@@ -53,4 +53,3 @@ namespace App{
       }
     }
     export const projectState = ProjectState.getInstance();
-}
