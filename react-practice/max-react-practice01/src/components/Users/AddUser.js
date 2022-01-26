@@ -10,6 +10,14 @@ export const AddUser = (props) => {
 
   const addUserHandler = (event) => {
     event.preventDefault();
+
+    if (enterdUserName.trim().length === 0 || enterdAge.trim().length === 0) {
+      return;
+    }
+    if (+enterdAge < 1) return;
+
+    setEnteredUserName("");
+    setEnteredAge("");
   };
 
   const usernameChangedHandler = (event) => {
@@ -26,10 +34,16 @@ export const AddUser = (props) => {
         <input
           id="username"
           type="text"
+          value={enterdUserName}
           onChange={usernameChangedHandler}
         ></input>
         <label htmlFor="username">Age </label>
-        <input id="age" type="number" onChange={ageChangedHandler}></input>
+        <input
+          id="age"
+          type="number"
+          value={enterdAge}
+          onChange={ageChangedHandler}
+        ></input>
         <Button type="submit">追加</Button>
       </form>
     </Card>
