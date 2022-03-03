@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Card } from "../UI/Card";
 import { Button } from "../UI/Button";
 import { ErrorModal } from "../UI/ErrorModal";
@@ -6,6 +6,9 @@ import { ErrorModal } from "../UI/ErrorModal";
 import classes from "./AddUser.module.css";
 
 export const AddUser = (props) => {
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
+
   const [enterdUserName, setEnteredUserName] = useState("");
   const [enterdAge, setEnteredAge] = useState("");
   const [error, setError] = useState();
@@ -13,14 +16,17 @@ export const AddUser = (props) => {
   const addUserHandler = (event) => {
     event.preventDefault();
 
-    if (enterdUserName.trim().length === 0 || enterdAge.trim().length === 0) {
+    const enterdName = nameInputRef.current.value;
+    const enterdUserAge = ageInputRef.current.value;
+
+    if (enterdName.trim().length === 0 || enterdUserAge.trim().length === 0) {
       setError({
         title: "入力が無効です",
         message: "何か入力してください",
       });
       return;
     }
-    if (+enterdAge < 1) {
+    if (+enterdUserAge < 1) {
       setError({
         title: "入力が無効です",
         message: "0より大きい年齢を入力してください",
@@ -33,12 +39,12 @@ export const AddUser = (props) => {
     setEnteredAge("");
   };
 
-  const usernameChangedHandler = (event) => {
-    setEnteredUserName(event.target.value);
-  };
-  const ageChangedHandler = (event) => {
-    setEnteredAge(event.target.value);
-  };
+  //   const usernameChangedHandler = (event) => {
+  //     setEnteredUserName(event.target.value);
+  //   };
+  //   const ageChangedHandler = (event) => {
+  //     setEnteredAge(event.target.value);
+  //   };
   const errorHandler = () => {
     setError(null);
   };
@@ -58,6 +64,7 @@ export const AddUser = (props) => {
           <input
             id="username"
             type="text"
+            ref={nameInputRef}
             value={enterdUserName}
             onChange={usernameChangedHandler}
           ></input>
@@ -67,6 +74,7 @@ export const AddUser = (props) => {
             type="number"
             value={enterdAge}
             onChange={ageChangedHandler}
+            ref={ageInputRef}
           ></input>
           <Button type="submit">追加</Button>
         </form>
