@@ -32,5 +32,37 @@ controls.append(leftBtn);
 controls.append(rightBtn);
 target.append(controls);
 
-//setAttribute(属性名, 属性値)を使ってindexの初期値を設定します。
 main.setAttribute("data-index", "0");
+
+function slideJump(steps) {
+  let index = parseInt(main.getAttribute("data-index"));
+  let currentElement = sliderItems.item(index);
+
+  index += steps;
+
+  if (index < 0) index = sliderItems.length - 1;
+  else if (index >= sliderItems.length) index = 0;
+
+  let nextElement = sliderItems.item(index);
+
+  main.setAttribute("data-index", index.toString());
+}
+
+function animateMain(currentElement, nextElement, animationType) {
+  main.innerHTML = "";
+  main.append(nextElement);
+
+  extra.innerHTML = "";
+  extra.append(currentElement);
+
+  main.classList.add("expand-animation");
+  extra.classList.add("deplete-animation");
+
+  if (animationType === "right") {
+    sliderShow.innerHTML = "";
+    sliderShow.append(extra);
+    sliderShow.append(main);
+  }
+  // ここからelse if文を記述してください。
+  // leftの場合はアニメーションの方向に気をつける必要があります。
+}
